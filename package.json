@@ -1,0 +1,27 @@
+{
+  "name": "redux-fetch-actions",
+  "version": "0.0.0",
+  "description": "easy fetch with redux",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eriksape/redux-fetch-actions.git"
+  },
+  "keywords": [
+    "redux",
+    "fetch"
+  ],
+  "author": "@eriksape",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eriksape/redux-fetch-actions/issues"
+  },
+  "homepage": "https://github.com/eriksape/redux-fetch-actions#readme",
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "path-to-regexp": "^1.5.1"
+  }
+}
