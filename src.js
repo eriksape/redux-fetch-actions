@@ -1,6 +1,9 @@
 import _ from 'lodash'
 import pathToRegexp from 'path-to-regexp'
-import fetch from 'isomorphic-fetch'
+
+if(_.isUndefined(global.fetch)){
+  const fetch = require('isomorphic-fetch')
+}
 
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
