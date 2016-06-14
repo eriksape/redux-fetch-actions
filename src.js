@@ -41,7 +41,6 @@ class abstractActions {
 
   set(requests){
     const self = this
-    let lol = {}
     _.each(requests, (request, name) => {
       this.success.name[name]   = this.name + '_'  + name.toUpperCase() + '_SUCCESS'
       this.fail.name[name]      = this.name + '_'  + name.toUpperCase() + '_FAIL'
@@ -64,13 +63,18 @@ class abstractActions {
   createRequest(){
     const method               = arguments[0]
     const config               = arguments[1]  || { body:{} }
-    const {location, options}  = this
+    const {location,
+      options, authorization}  = this
     const {uri, success, fail} = method
     let url                    = pathToRegexp.compile(method.uri)(config.pathKeys)
     options.method             = method.method
 
 
     if( !_.isEqual( config.body, {} ) ) options.body = JSON.stringify(config.body)
+
+    if(authorization){
+      options.headers.Authorization = authorization
+    }
 
     return dispatch => fetch(location+url, options)
       .then( checkStatus )
@@ -87,10 +91,11 @@ class abstractActions {
 }
 
 export default class actions extends abstractActions{
-  constructor(name, location, requests, options = {}){
+  constructor(name, location, requests, authorization, options = {}){
     super();
     this.name     = name
     this.location = location
+    this.authorization = authorization
 
     this.options = {
       mode:        'cors',
