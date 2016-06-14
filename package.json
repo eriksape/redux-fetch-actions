@@ -5,7 +5,7 @@
   "main": "dist.js",
   "scripts": {
     "build": "node_modules/.bin/babel src.js -o dist.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha --compilers js:babel-core/register"
   },
   "repository": {
     "type": "git",
@@ -22,11 +22,20 @@
   },
   "homepage": "https://github.com/eriksape/redux-fetch-actions#readme",
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.13.1",
     "path-to-regexp": "^1.5.1"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
-    "babel-preset-es2015": "^6.9.0"
+    "babel-core": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "expect": "^1.20.1",
+    "from": "^0.1.3",
+    "import": "0.0.6",
+    "mocha": "^2.5.3",
+    "nock": "^8.0.0",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0"
   }
 }
