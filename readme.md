@@ -92,6 +92,8 @@ export default (state = [], action)=>{
 _dispatch action_
 ```javascript
 
+import userActions from './userActions.js'
+
 //get index -> GET http://localhost:8080/api/users
 dispatch(userActions.index())
 

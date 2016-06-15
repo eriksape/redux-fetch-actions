@@ -1,6 +1,6 @@
 {
   "name": "redux-fetch-actions",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "easy fetch with redux",
   "main": "dist.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "fetch"
   ],
   "author": "@eriksape",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/eriksape/redux-fetch-actions/issues"
   },
