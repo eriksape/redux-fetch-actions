@@ -84,3 +84,33 @@ export default (state = [], action)=>{
   }
 }
 ```
+
+_dispatch action_
+js```
+
+//get index -> GET http://localhost:8080/api/users
+dispatch(userActions.index())
+
+//post store -> POST http://localhost:8080/api/users
+
+dispatch(userActions.store(
+  {
+    body:{
+      name:'name',
+      age:20,
+    }
+  }
+))
+
+//delete destroy -> DELETE http://localhost:8080/api/users/:id
+
+dispatch(userActions.delete(
+  {
+    pathKeys:{
+      id:1 // this will become http://localhost:8080/api/users/1
+    }
+  }
+))
+
+//
+```
