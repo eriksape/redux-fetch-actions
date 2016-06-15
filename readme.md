@@ -86,7 +86,7 @@ export default (state = [], action)=>{
 ```
 
 _dispatch action_
-js```
+```javascript
 
 //get index -> GET http://localhost:8080/api/users
 dispatch(userActions.index())
