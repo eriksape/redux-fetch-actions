@@ -1,15 +1,35 @@
+_authorization.js_
+```javascript
+
+const jwt = localStorage.getItem("jwt");
+
+const authorization = jwt!==null?`Bearer ${jwt}`:false;
+
+export default authorization
+```
+
 _userActions.js_
 ```javascript
 import fetch_actions from 'redux-fetch-actions'
+import authorization from './authorization'
 
 const uri = '/api/users'
+const server = 'http://localhost:8080'
+const options = {
+  mode:        'same-origin',
+  credentials: 'include',
+  headers:     {
+    "Content-type":     "application/json",
+    'X-Requested-With': 'XMLHttpRequest',
+  },
+}
 
-const action = new fetch_actions('users', '', {
+const action = new fetch_actions('users', server, {
   index:{uri:uri, method: 'get'},
   store:{uri:uri, method: 'post'},
   update:{uri:uri+'/:id', method: 'put'},
   destroy:{uri:uri+'/:id', method: 'delete'}
-})
+}, authorization, )
 
 export default action;
 ```
