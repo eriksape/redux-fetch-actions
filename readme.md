@@ -1,3 +1,7 @@
+```
+npm i --save redux-fetch-actions
+```
+
 _authorization.js_
 ```javascript
 
@@ -29,7 +33,7 @@ const action = new fetch_actions('users', server, {
   store:{uri:uri, method: 'post'},
   update:{uri:uri+'/:id', method: 'put'},
   destroy:{uri:uri+'/:id', method: 'delete'}
-}, authorization, )
+}, authorization, options)
 
 export default action;
 ```
