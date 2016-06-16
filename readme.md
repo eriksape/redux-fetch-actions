@@ -139,7 +139,7 @@ dispatch(userActions.update(
 
     //your custom action -> POST http://localhost:8080/api/users/:your/:custom
 
-    dispatch(userActions.destroy(
+    dispatch(userActions.custom(
       {
         pathKeys:{
           your:'custom',
