@@ -10,11 +10,9 @@ npm i --save redux-fetch-actions
 _authorization.js_
 ```javascript
 
-const jwt = localStorage.getItem("jwt");
+const Authorization = () => localStorage.getItem('jwt')!==null?`Bearer ${localStorage.getItem('jwt')}`:false;
 
-const authorization = jwt!==null?`Bearer ${jwt}`:false;
-
-export default authorization
+export default Authorization
 ```
 
 _userActions.js_
