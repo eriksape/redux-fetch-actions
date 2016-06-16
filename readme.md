@@ -143,7 +143,7 @@ dispatch(userActions.update(
       {
         pathKeys:{
           your:'custom',
-          custom:'action' // this will become http://localhost:8080/api/users/your/action
+          custom:'action' // this will become http://localhost:8080/api/users/custom/action
         },
         body:{
           ... //your data
