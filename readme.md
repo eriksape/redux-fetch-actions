@@ -1,4 +1,4 @@
-## _This is an extremely young library, so the API may change. Comments and feedback welcome._
+_This is an extremely young library, so the API may change. Comments and feedback welcome._
 
 ## Installation
 ```
