@@ -1,6 +1,11 @@
+## _This is an extremely young library, so the API may change. Comments and feedback welcome._
+
+## Installation
 ```
 npm i --save redux-fetch-actions
 ```
+
+## How it works
 
 _authorization.js_
 ```javascript
