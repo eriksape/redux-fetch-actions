@@ -63,7 +63,6 @@ export default (state = [], action)=>{
       break
     case success.store:
       state.push(action.payload.value)
-      action.payload.extra.resolve(true)
       return[
         ...state
       ]
@@ -72,13 +71,12 @@ export default (state = [], action)=>{
     case success.update:
       const key = _.findKey(state, _.pick(action.payload.value, ['id']) )
       state[key] = action.payload.value
-      action.payload.extra.resolve(true)
       return[
         ...state
       ]
       break
     case success.destroy:
-    const keyDelete = _.find(state, action.payload.body)
+    const keyDelete = _.find(state, action.payload.pathKeys)
     state.splice(keyDelete,1)
     return [
       ...state
@@ -86,7 +84,6 @@ export default (state = [], action)=>{
       break
     case fail.store:
     case fail.update:
-    action.payload.extra.reject(action.payload.value)
     return[
       ...state
     ]
