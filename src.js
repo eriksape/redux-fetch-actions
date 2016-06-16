@@ -75,8 +75,8 @@ class abstractActions {
 
     if( !_.isEqual( config.body, {} ) ) options.body = JSON.stringify(config.body)
 
-    if(authorization){
-      options.headers.Authorization = authorization
+    if(authorization()){
+      options.headers.Authorization = authorization()
     }
 
     return dispatch => fetch(location+url, options)
