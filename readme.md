@@ -37,7 +37,9 @@ const action = new fetch_actions('users', server, {
   index:{uri:uri, method: 'get'},
   store:{uri:uri, method: 'post'},
   update:{uri:uri+'/:id', method: 'put'},
-  destroy:{uri:uri+'/:id', method: 'delete'}
+  destroy:{uri:uri+'/:id', method: 'delete'},
+  //you can make your custom action
+  custom:{uri:uri+'/:your/:custom', method:'post' }
 }, authorization, options)
 
 export default action;
@@ -113,14 +115,40 @@ dispatch(userActions.store(
   }
 ))
 
-//delete destroy -> DELETE http://localhost:8080/api/users/:id
+//put update -> PUT http://localhost:8080/api/users/:id
 
-dispatch(userActions.delete(
+dispatch(userActions.update(
   {
     pathKeys:{
       id:1 // this will become http://localhost:8080/api/users/1
+    },
+    body:{
+      name:'name',
+      age:20,
     }
   }
+
+  //delete destroy -> DELETE http://localhost:8080/api/users/:id
+
+  dispatch(userActions.destroy(
+    {
+      pathKeys:{
+        id:1 // this will become http://localhost:8080/api/users/1
+      }
+    }
+
+    //your custom action -> POST http://localhost:8080/api/users/:your/:custom
+
+    dispatch(userActions.destroy(
+      {
+        pathKeys:{
+          your:'custom',
+          custom:'action' // this will become http://localhost:8080/api/users/your/action
+        },
+        body:{
+          ... //your data
+        }
+      }
 ))
 
 //
