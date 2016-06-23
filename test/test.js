@@ -8,7 +8,7 @@ import Actions from '../src.js'
 
 const uri           = '/api/users'
 const server        = 'http://example.com'
-
+const authorization = () => false
 
 const user_actions = new Actions('users', server, {
   index:   {uri:uri, method:'get'},
@@ -16,7 +16,7 @@ const user_actions = new Actions('users', server, {
   update:  {uri:uri+'/:id', method:'put'},
   destroy: {uri:uri+'/:id', method:'delete'},
   custom1: {uri:uri+'/:id/:sub', method:'get' }
-},{})
+},authorization,{})
 
 let data = [{
     id:         "220d27cf-3c3d-4160-82c2-8cdb09a75e9f",

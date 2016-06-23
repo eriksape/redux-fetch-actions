@@ -72,8 +72,15 @@ class abstractActions {
     let url                    = pathToRegexp.compile(method.uri)(config.pathKeys)
     options.method             = method.method
 
-
-    if( !_.isEqual( config.body, {} ) ) options.body = JSON.stringify(config.body)
+    if( !_.isEqual( config.body, {} ) && !_.isUndefined(config.body) ) {
+      if( _.isEqual('get',options.method) ){
+        url=url+'?'+ _.map(config.body, (val, key) =>
+          encodeURIComponent(key) + '=' + encodeURIComponent(val)
+        ).join('&')
+      } else {
+        options.body = JSON.stringify(config.body)
+      }
+    }
 
     if(authorization()){
       options.headers.Authorization = authorization()
