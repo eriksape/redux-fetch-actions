@@ -71,6 +71,7 @@ class abstractActions {
     const {uri, success, fail} = method
     let url                    = pathToRegexp.compile(method.uri)(config.pathKeys)
     options.method             = method.method
+    options.body               = {}
 
     if( !_.isEqual( config.body, {} ) && !_.isUndefined(config.body) ) {
       if( _.isEqual('get',options.method) ){
