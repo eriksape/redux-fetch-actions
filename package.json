@@ -1,6 +1,6 @@
 {
   "name": "redux-fetch-actions",
-  "version": "0.0.10",
+  "version": "0.0.13",
   "description": "easy fetch with redux",
   "main": "dist.js",
   "scripts": {
