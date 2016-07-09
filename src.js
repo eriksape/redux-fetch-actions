@@ -65,7 +65,7 @@ class abstractActions {
 
   createRequest(){
     const method               = arguments[0]
-    const config               = arguments[1]  || { body:{} }
+    const config               = arguments[1]  || { body:{}, promise:null }
     const {location,
       options, authorization}  = this
     const {uri, success, fail} = method
@@ -95,7 +95,8 @@ class abstractActions {
           value:value.value,
           pathKeys:config.pathKeys
         },
-        type: (_.isEqual('success',value.type)?success:fail)
+        type: (_.isEqual('success',value.type)?success:fail),
+        promise: config.promise
       })
     )
   }
