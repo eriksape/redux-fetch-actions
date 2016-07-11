@@ -93,7 +93,8 @@ class abstractActions {
       .then( value => dispatch({
         payload:{
           value:value.value,
-          pathKeys:config.pathKeys
+          pathKeys:config.pathKeys,
+          body:config.body,
         },
         type: (_.isEqual('success',value.type)?success:fail),
         promise: config.promise
