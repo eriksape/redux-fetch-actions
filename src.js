@@ -87,20 +87,28 @@ class abstractActions {
       options.headers.Authorization = authorization()
     }
 
-    return dispatch => fetch(location+url, options)
-      .then( checkStatus )
-      .then(createResponse, createErrorResponse)
-      .then( value => dispatch({
+    return dispatch => {
+      dispatch({
+        type:'isFetching',
         payload:{
-          value:value.value,
-          pathKeys:config.pathKeys,
-          body:config.body,
-        },
-        type: (_.isEqual('success',value.type)?success:fail),
-        promise: config.promise
-      })
-    )
-  }
+          isFetching:true
+        }
+      });
+      return fetch(location+url, options)
+          .then( checkStatus )
+          .then(createResponse, createErrorResponse)
+          .then( value => dispatch({
+            payload:{
+              value:value.value,
+              pathKeys:config.pathKeys,
+              body:config.body,
+            },
+            type: (_.isEqual('success',value.type)?success:fail),
+            promise: config.promise
+          })
+        )
+      }
+    }
 }
 
 export default class actions extends abstractActions{
