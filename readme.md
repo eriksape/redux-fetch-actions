@@ -1,5 +1,8 @@
 _This is an extremely young library, so the API may change. Comments and feedback welcome._
 
+##Introduction
+`redux-fetch-actions` makes yours communication with reducers to the server easy. It only generates the actions for making AJAX calls to API endpoints, so it let you are free to generate your reducer as you want you need to fill it with the action.payload.
+
 ## Installation
 ```
 npm i --save redux-fetch-actions
