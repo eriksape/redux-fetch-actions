@@ -1,6 +1,9 @@
 import _ from 'lodash'
 import pathToRegexp from 'path-to-regexp'
 
+const IS_FETCHING = 'REDUX_FETCH_ACTIONS_IS_FETCHING'
+const STOP_FETCHING = 'REDUX_FETCH_ACTIONS_STOP_FETCHING'
+
 if(_.isUndefined(global.fetch)){
   const fetch = require('isomorphic-fetch')
 }
@@ -88,24 +91,23 @@ class abstractActions {
     }
 
     return dispatch => {
-      dispatch({
-        type:'isFetching',
-        payload:{
-          isFetching:true
-        }
-      });
+      dispatch({type:IS_FETCHING})
       return fetch(location+url, options)
           .then( checkStatus )
           .then(createResponse, createErrorResponse)
-          .then( value => dispatch({
-            payload:{
-              value:value.value,
-              pathKeys:config.pathKeys,
-              body:config.body,
-            },
-            type: (_.isEqual('success',value.type)?success:fail),
-            promise: config.promise
-          })
+          .then( value => {
+            dispatch({type:STOP_FETCHING})
+            return dispatch({
+              payload:{
+                value:value.value,
+                pathKeys:config.pathKeys,
+                body:config.body,
+                response:value.value
+              },
+              type: (_.isEqual('success',value.type)?success:fail),
+              promise: config.promise
+            })
+          }
         )
       }
     }
@@ -145,4 +147,17 @@ export default class actions extends abstractActions{
     return values
   }
 
+}
+
+export const reducer = ( state = false, action ) => {
+  const { type, payload } = action
+  switch (type) {
+    case IS_FETCHING:
+      return true
+      break;
+    case STOP_FETCHING:
+      return false
+    default:
+      return state
+  }
 }
