@@ -10,21 +10,31 @@ npm i --save redux-fetch-actions
 
 ## How it works
 
-_authorization.js_
-```javascript
+With a react project with the next project structure
 
-const Authorization = () => localStorage.getItem('jwt')!==null?`Bearer ${localStorage.getItem('jwt')}`:false;
-
-export default Authorization
+```
+project
+│   README.md
+│   file001.txt    
+│
+└───reducers
+    │   index.js
+    │   authorization.js
+    │
+    ├───users
+    │   │   actions.js
+    │   │   reducer.js
 ```
 
-_userActions.js_
+_reducers/users/actions.js_
 ```javascript
 import fetch_actions from 'redux-fetch-actions'
-import authorization from './authorization'
+import authorization from './../authorization'
 
 const uri = '/api/users'
-const server = 'http://localhost:8080'
+const server = 'http://api.server:8080' // if is left empty ('') wiil be from your current origin
+
+// these are options for the fetch api
 const options = {
   mode:        'same-origin',
   credentials: 'include',
@@ -34,8 +44,8 @@ const options = {
   },
 }
 
-const action = new fetch_actions('users', server, {
-  index:{uri:uri, method: 'get'},
+export default const action = new fetch_actions('users', server, {
+  index:{uri:uri, method: 'get'}, // this will be GET 'http://api.server:8080/api/users'
   store:{uri:uri, method: 'post'},
   update:{uri:uri+'/:id', method: 'put'},
   destroy:{uri:uri+'/:id', method: 'delete'},
@@ -43,57 +53,67 @@ const action = new fetch_actions('users', server, {
   custom:{uri:uri+'/:your/:custom', method:'post' }
 }, authorization, options)
 
-export default action;
 ```
 
-_userReducer.js_
+_reducers/users/reducer.js_
 
 ```javascript
-import _ from 'lodash'
-import action from './userActions.js'
+import action from './actions.js'
 
 const { success, fail } = action.constants
 
 export default (state = [], action)=>{
-  switch (action.type) {
+  const {type, payload} = action
+  let index = -1
+  switch (type) {
     case success.index:
-      return [
-        ...state,
-        ...action.payload.value
-      ]
+      return payload.response
       break
     case success.store:
-      state.push(action.payload.value)
-      return[
-        ...state
-      ]
+      return state.push(payload.response)
       break
-
     case success.update:
-      const key = _.findKey(state, _.pick(action.payload.value, ['id']) )
-      state[key] = action.payload.value
-      return[
-        ...state
-      ]
+      index = state.findIndex( obj => obj.id == payload.response.id )
+      state[index] = action.payload.value
+      return state
       break
     case success.destroy:
-    const keyDelete = _.find(state, action.payload.pathKeys)
-    state.splice(keyDelete,1)
-    return [
-      ...state
-    ]
+      index = state.findIndex( obj => obj.id == payload.pathKeys.id )
+      state.splice(index,1)
+      return state
       break
     case fail.store:
     case fail.update:
-    return[
-      ...state
-    ]
+      return state
     default:
       return state
   }
 }
 ```
 
+_reducers/authorization.js_
+```javascript
+//this files is for handle jwt only if is needed
+const Authorization = () => localStorage.getItem('jwt')!==null?`Bearer ${localStorage.getItem('jwt')}`:false;
+
+export default Authorization
+```
+
+_reducers/index.js_
+```javascript
+...
+import { reducer as isFetching } from 'redux-fetch-actions'
+
+import users from './users/reducer'
+...
+
+const rootReducer = combineReducers({
+  ...
+  users, // <-- this is the reducer
+  isFetching // <---- this is for handle fetching state in your application
+})
+...
+```
 _dispatch action_
 ```javascript
 
